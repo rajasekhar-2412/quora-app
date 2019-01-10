@@ -17,6 +17,9 @@
     Favorited by:
     = @question.favorited_users.map(&:full_name).join(", ")
   - if @vote.persisted?  && @vote.is_up?
+    - votes = @question.votes.group_by{|a| a.is_up}
+    No of Upvotes:
+    = votes[true].count
     = button_to "Un-vote", [@question, @vote], method: :delete, class: "btn btn-default"
   - else
     = form_for [@question, @vote] do |f|
