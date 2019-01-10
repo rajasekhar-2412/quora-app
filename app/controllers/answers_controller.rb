@@ -18,7 +18,7 @@ class AnswersController < QuestionsController
 
   def update
     @answer.update(answer_attributes)
-    render text: :ok
+    respond_with_bip(@answer)
   end
 
   def destroy
