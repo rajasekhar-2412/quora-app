@@ -1,0 +1,33 @@
+!!!
+%head
+  %title Awesome Q&amp;A
+  = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+  = javascript_include_tag 'application', 'data-turbolinks-track' => true
+  = csrf_meta_tags
+%body
+  .navbar-fixed-top{:role => "navigation"}
+    .container
+      .navbar-header
+        = link_to "Awesome Q&A", root_path, class: "navbar-brand"
+      %ul.nav.navbar-nav
+        %li= link_to "new question", new_question_path
+      %div
+        %ul.nav.navbar-nav.pull-right
+          %li
+            %i.fa.fa-align-justify.fa-2x{onclick: "wideLayout();"}
+          %li
+            %i.fa.fa-th.selected.fa-2x{onclick: "gridLayOut();"}
+          - if user_signed_in?
+            %li
+              = current_user.full_name
+            %li
+              = link_to "sign out", destroy_user_session_path, method: :delete
+          - else
+            %li
+              = link_to "sign in", new_user_session_path
+
+  .container
+    - if flash[:notice] || flash[:alert]
+      %h3= flash[:notice] || flash[:alert]
+
+    = yield

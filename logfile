@@ -1,0 +1,4 @@
+2019-01-10 16:06:39.436 IST [17700] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-01-10 16:06:39.437 IST [17700] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-01-10 16:06:39.481 IST [17701] LOG:  database system was shut down at 2019-01-10 15:43:37 IST
+2019-01-10 16:06:39.491 IST [17700] LOG:  database system is ready to accept connections

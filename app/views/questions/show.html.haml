@@ -1,0 +1,47 @@
+.lightjumbotron
+  %h1= @question.title
+  - if session[:has_voted]
+    %p vote count: #{@question.vote_count}
+  - else
+  - if @question.categories.present?
+    Categories (#{@question.categories.count})
+    = @question.categories.map(&:title).join(", ")
+  %p= @question.description
+  %p= formatted_date(@question.created_at)
+  - if @favorite
+    %p= link_to "Unfavorite", question_favorite_path(@favorite.question, @favorite), method: :delete, class: "btn btn-danger"
+  - else
+    %p= link_to "Favorite", question_favorites_path(@question), method: :post, class: "btn btn-danger"
+
+  - if @question.favorited_users.present?
+    Favorited by:
+    = @question.favorited_users.map(&:full_name).join(", ")
+  - if @vote.persisted?  && @vote.is_up?
+    = button_to "Un-vote", [@question, @vote], method: :delete, class: "btn btn-default"
+  - else
+    = form_for [@question, @vote] do |f|
+      = f.hidden_field :is_up, value: true
+      = f.submit "Vote Up", class: "btn btn-default"
+
+  /= form_for [@question, @vote] do |f|
+  /  = f.hidden_field :is_up, value: false
+  /  = f.submit "Vote Down", class: "btn btn-default"
+
+  %p
+    = link_to "edit", edit_question_path
+    = |
+    = link_to "delete", @question, method: :delete, data: {confirm: "Are you sure you want to delete this?" }
+  %h2 Add an Answer
+  - if @answer.errors.any?
+    %ul
+      - @answer.errors.full_messages.each do |message|
+        %li message
+
+  = form_for @answer, url: question_answers_path(@question), remote: true do |f|
+    = f.text_area :body, class: "form-control"
+    = f.submit class: "btn btn-default"
+    %hr
+
+.answers
+  - @question.answers.each do |answer|
+    = render "/answers/answer", answer: answer

@@ -1,0 +1,18 @@
+- if @question.errors.any?
+  %ul
+    - @question.errors.full_messages.each do |message|
+      %li= message
+
+= form_for @question do |f|
+  .lightjumbotron
+    .form-field
+      = f.label :title
+      = f.text_field :title, class: "form-control"
+    .form-field
+      = f.label :description
+      = f.text_area :description, class: "form-control"
+
+    = f.collection_check_boxes :category_ids, Category.order("title"), :id, :title
+    %br
+    = f.submit (@question.persisted? ? "update" : "save"), class: "btn btn-default"
+

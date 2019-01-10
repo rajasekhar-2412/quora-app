@@ -1,0 +1,6 @@
+- @questions.each do |question|
+  = link_to question do
+    .lightwell.answer.col-sm-3
+      %p= formatted_date(question.created_at)
+      %h3= question.title.truncate(25, ommission: '')
+      %p= question.description
