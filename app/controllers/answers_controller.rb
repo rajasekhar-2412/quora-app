@@ -4,7 +4,6 @@ class AnswersController < QuestionsController
   def create
     @answer = @question.answers.new(answer_attributes)
     @answer.user = current_user
-    binding.pry
     respond_to do |format|
       if @answer.save
         format.js { render "create" }
