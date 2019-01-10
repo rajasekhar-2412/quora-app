@@ -1,6 +1,7 @@
 class Answer < ActiveRecord::Base
   belongs_to :question
-  validates_presence_of :body
+  belongs_to :user
+  validates :body, presence: true
 
   has_many :comments, dependent: :destroy
 
