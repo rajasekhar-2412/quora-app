@@ -4,6 +4,10 @@ module ApplicationHelper
   end
 
   def author user
-  	'Answered by' + user&.first_name.to_s + user&.last_name.to_s
+  	'Answered by' + user&.full_name.to_s
+  end
+
+  def display_name user
+  	'Hello!! ' + user.full_name.to_s
   end
 end

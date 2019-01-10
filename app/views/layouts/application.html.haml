@@ -13,13 +13,9 @@
         %li= link_to "new question", new_question_path
       %div
         %ul.nav.navbar-nav.pull-right
-          %li
-            %i.fa.fa-align-justify.fa-2x{onclick: "wideLayout();"}
-          %li
-            %i.fa.fa-th.selected.fa-2x{onclick: "gridLayOut();"}
           - if user_signed_in?
-            %li
-              = current_user.full_name
+            %li{style: 'top: 16px;'}
+              = display_name(current_user)
             %li
               = link_to "sign out", destroy_user_session_path, method: :delete
           - else

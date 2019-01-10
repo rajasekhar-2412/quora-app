@@ -1,5 +1,6 @@
 class AnswersController < QuestionsController
   before_action :find_question
+  before_action :find_answer, only: [:destroy, :update]
 
   def create
     @answer = @question.answers.new(answer_attributes)
@@ -15,8 +16,12 @@ class AnswersController < QuestionsController
     end
   end
 
+  def update
+    @answer.update(answer_attributes)
+    render text: :ok
+  end
+
   def destroy
-    @answer = @question.answers.find(params[:id])
     if @answer.user == current_user && @answer.destroy
       redirect_to @question, notice: "Answer deleted"
     else
@@ -25,6 +30,10 @@ class AnswersController < QuestionsController
   end
 
   private
+
+  def find_answer
+    @answer = @question.answers.find(params[:id])
+  end
 
   def answer_attributes
     params.require(:answer).permit([:body])

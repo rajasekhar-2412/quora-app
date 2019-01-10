@@ -1,6 +1,6 @@
 .lightwell.answer.col-sm-3{id: dom_id(answer)}
   %p= author(answer.user)
-  %p= answer.body
-  %p= formatted_date(answer.created_at)
-  .col-sm-3
-    .col-sm-2= button_to 'delete', question_answer_path(@question, answer), method: :delete, class: "btn btn-default", data: {confirm: "Are you sure you want to delete this answer?"}
+  %p= best_in_place_if answer.user == current_user, answer, :body,  url: question_answer_path(@question, answer), method: :put
+  %p{id: 'updated_at'}= formatted_date(answer.updated_at)
+  .col-sm-20
+    .col-sm-4= button_to 'delete', question_answer_path(@question, answer), method: :delete, class: "btn btn-default", data: {confirm: "Are you sure you want to delete this answer?"}
