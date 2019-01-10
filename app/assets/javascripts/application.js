@@ -19,7 +19,10 @@
 $(document).ready(function() {
   /* Activating Best In Place */
   jQuery(".best_in_place").best_in_place();
-
+  $('.best_in_place').bind("ajax:success", function(event, data, status, xhr){ 
+  	var parsed_data = jQuery.parseJSON(data);
+  	$("#"+parsed_data['id']).text(parsed_data['updated']);
+  })
 });
 
 var wideLayout = function() {

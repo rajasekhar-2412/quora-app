@@ -2,6 +2,8 @@ class AnswersController < QuestionsController
   before_action :find_question
   before_action :find_answer, only: [:destroy, :update]
 
+  include ApplicationHelper
+
   def create
     @answer = @question.answers.new(answer_attributes)
     @answer.user = current_user
@@ -18,7 +20,9 @@ class AnswersController < QuestionsController
 
   def update
     @answer.update(answer_attributes)
-    respond_with_bip(@answer)
+    respond_to do |format|
+      format.json { render :json => { updated: formatted_date(@answer.updated_at), id: @answer.id, :status => 200 } }
+    end
   end
 
   def destroy
